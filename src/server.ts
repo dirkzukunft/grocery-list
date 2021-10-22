@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import express from 'express';
+import { connectDb } from './utils/database';
 dotenv.config();
 
 const port = process.env.PORT || 3001;
@@ -16,14 +17,14 @@ app.get('*', (_request, response) => {
   response.sendFile('index.html', { root: 'dist/app' });
 });
 
-// connectDb().then(
-// () => {
-app.listen(port, async () => {
-  console.log('Connected to MongoDB');
-  console.log(`Frontend listening at http://localhost:3000`);
-  console.log(`Backend listening at http://localhost:${port}`);
-  console.log(`Storybook is at http://localhost:6006`);
-});
-// },
-// (error) => console.error(error)
-// );
+connectDb().then(
+  () => {
+    app.listen(port, async () => {
+      console.log('Connected to MongoDB');
+      console.log(`Frontend listening at http://localhost:3000`);
+      console.log(`Backend listening at http://localhost:${port}`);
+      console.log(`Storybook is at http://localhost:6006`);
+    });
+  },
+  (error) => console.error(error)
+);
