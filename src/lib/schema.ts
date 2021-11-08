@@ -1,6 +1,10 @@
 import { gql } from 'apollo-server-core';
 
 export const typeDefs = gql`
+  type Query {
+    data: String
+  }
+
   type productClass {
     id: ID!
     name: String!
